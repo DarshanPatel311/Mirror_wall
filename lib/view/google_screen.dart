@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../commponets/bottom_bar.dart';
 import '../commponets/popup_menu.dart';
 import '../provider/Google_Provider.dart';
+import '../utils/google_variable.dart';
 
 late InAppWebViewController inAppWebViewController;
 PullToRefreshController pullrefreshcontroller = PullToRefreshController(
@@ -15,7 +16,7 @@ PullToRefreshController pullrefreshcontroller = PullToRefreshController(
       inAppWebViewController.reload();
     }
 );
-TextEditingController txtsearch =TextEditingController();
+
 
 class Google extends StatelessWidget {
   const Google({super.key});
