@@ -1,48 +1,61 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-
-import 'package:flutter/widgets.dart';
 
 import '../utils/google_variable.dart';
 
-class GoogleProvider extends ChangeNotifier{
-  double progres=0;
-  String search="Google";
-  List<String> bookmarkList = [];
-  List<String> history=[];
-  String? currentUrl;
+class GoogleProvider extends ChangeNotifier {
+  String search = "";
+  double progres = 0;
+  String? url;
+  String? urlhistory;
   String? title;
-  void ChangeProgres(int progres){
-    this.progres=progres/100;
-    notifyListeners();
-  }
-  void Search(String search){
-    this.search=search;
-    notifyListeners();
-  }
-  void setCurrentUrl(String url){
-    currentUrl = url;
-    notifyListeners();
-  }
-  Future<void> addurl(url)
-  async {
+  WebUri uri = WebUri('');
+  List<String> bookmarklist = [];
+  List<String> historylist = [];
+  int browser = 0;
 
-    currentUrl=url.toString();
-     title=await inAppWebViewController.getTitle();
+  void Search(String search) {
+    this.search = search;
     notifyListeners();
+  }
 
-  }
-  void addBookMark(){
-    bookmarkList.add(currentUrl!);
+  void Progress(int progress) {
+    this.progres = progress / 100;
     notifyListeners();
   }
-  void removehistory(index)
-  {
-    history.removeAt(index);
+
+  Future<void> addurl(url) async {
+    url = url.toString();
+    urlhistory = url.toString();
+    title = await inAppWebViewController.getTitle();
+    title = await inAppWebViewController.getTitle();
     notifyListeners();
   }
-  void remove(index)
-  {
-    bookmarkList.removeAt(index);
+
+  void radio(int value) {
+    browser = value;
     notifyListeners();
+  }
+
+  void addBookMarklist() {
+    bookmarklist.add(url!);
+    historylist.add(urlhistory!);
+    notifyListeners();
+  }
+
+  void historyremove(index) {
+    historylist.removeAt(index);
+    notifyListeners();
+  }
+
+  void remove(index) {
+    bookmarklist.removeAt(index);
+    notifyListeners();
+  }
+
+  void website(value) {
+    uri = WebUri(value);
+    inAppWebViewController.loadUrl(urlRequest: URLRequest(url: uri));
   }
 }
